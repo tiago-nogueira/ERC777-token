@@ -6,7 +6,7 @@ for(let i = 0; i < 20; i++) {
 	numbers.push(Math.floor(Math.random() * 1000000000000000));
 }
 
-contract("ICO", accounts => {
+contract("ICO-bytesToUint", accounts => {
 	let ICOInstance;
 	beforeEach(() => {
 		return ICO.deployed().then(instance => {

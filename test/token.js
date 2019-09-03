@@ -272,14 +272,6 @@ contract("Token", accounts => {
 			{ from: accounts[9] }
 		).then(assert.fail).catch(error => {
 			assert(error.message.indexOf("Operator must be authorized") >= 0, "Unexpected error message");
-
-			// check if the balances changed
-			return TokenInstance.balanceOf(accounts[0]);
-		}).then(balance => {
-			assert.equal(decToToken(balance), 90000, "balance must not have changed");	
-			return TokenInstance.balanceOf(accounts[1]);
-		}).then(balance => {
-			assert.equal(balance, 0, "balance must not have changed");		
 		});
 	});
 
@@ -296,15 +288,7 @@ contract("Token", accounts => {
 			),				
 			{ from: accounts[0] }
 		).then(assert.fail).catch(error => {
-			assert(error.message.indexOf("Can't send tokens from 0x0") >= 0, "Unexpected error message");
-
-			// check if the balances changed
-			return TokenInstance.balanceOf(zeroAddress);
-		}).then(balance => {
-			assert.equal(balance.toNumber(), 0, "balance must not have changed");
-			return TokenInstance.balanceOf(accounts[1]);
-		}).then(balance => {
-			assert.equal(balance, 0, "balance must not have changed");			
+			assert(error.message.indexOf("Can't send tokens from 0x0") >= 0, "Unexpected error message");		
 		});
 	});
 
@@ -398,11 +382,6 @@ contract("Token", accounts => {
 			{ from: accounts[7] }
 		).then(assert.fail).catch(error => {
 			assert(error.message.indexOf("Operator must be authorized") >= 0, "Unexpected error message");
-
-			// check if the balance changed
-			return TokenInstance.balanceOf(accounts[0]);
-		}).then(balance => {
-			assert.equal(decToToken(balance), 85000, "balance must not have changed");
 		});
 	});
 
@@ -419,11 +398,6 @@ contract("Token", accounts => {
 			{ from: accounts[0] }
 		).then(assert.fail).catch(error => {
 			assert(error.message.indexOf("Invalid address") >= 0, "Unexpected error message");
-
-			// check if the balance changed
-			return TokenInstance.balanceOf(zeroAddress);
-		}).then(balance => {
-			assert.equal(balance.toNumber(), 0, "balance must not have changed");
 		});
 	});
 

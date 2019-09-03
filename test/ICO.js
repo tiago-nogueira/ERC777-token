@@ -50,11 +50,6 @@ contract("ICO", accounts => {
 			{ from: accounts[1] }
 		).then(assert.fail).catch(error => {
 			assert(error.message.indexOf("Operators can't open the sale") >= 0, "operator can't start the sale");
-
-			// check if sale is open
-			return ICOInstance.saleOpen();
-		}).then(bool => {
-			assert(!bool, "sale have not been opened");
 		});
 	});
 
@@ -69,11 +64,6 @@ contract("ICO", accounts => {
 			assert(error.message.indexOf("Only the owner can open the sale") >= 0,
 				"'Only the owner can transfer to ICO address"
 			);
-
-			// Check if the supply changed
-			return ICOInstance.supplyICO();
-		}).then(supply => {
-			assert.equal(supply.toNumber(), 0, "correct supply");
 		});
 	});	
 
@@ -127,14 +117,6 @@ contract("ICO", accounts => {
 		).then(assert.fail).catch(error => {
 			assert(error.message.indexOf("Once sale is open, no more tokens are accepted") >= 0,
 				"can't transfer to ICO address twice");
-
-			// Check if the supply changed
-			return ICOInstance.supplyICO();
-		}).then(supply => {
-			assert.equal(supply.toNumber(), supplyICO, "Correct supply");
-			return ICOInstance.tokenPrice();
-		}).then(price => {
-			assert.equal(price.toNumber(), tokenPrice, "Correct price");
 		});
 	});
 
@@ -260,9 +242,6 @@ contract("ICO", accounts => {
 		return ICOInstance.endSale({ from: accounts[9] })
 		.then(assert.fail).catch(error => {
 			assert(error.message.indexOf("Only the owner can end the sale") >= 0, "can't end the sale");
-
-			// check if the contract still exists
-			return ICOInstance.supplyICO();
 		});
 	});
 
